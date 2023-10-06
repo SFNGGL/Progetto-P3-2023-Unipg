@@ -13,10 +13,24 @@ import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { HomeComponent } from './components/home/home.component';
 import { FunctionalitiesComponent } from './components/functionalities/functionalities.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from "./components/register/register.component";
 import { MenuComponent } from './components/menu/menu.component';
 import { EndscreenComponent } from "./components/endscreen/endscreen.component";
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthService } from "./servizi/auth.service";
+
+// import di Angular Fire
+import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
+import { environment } from "../environments/environments";
+import { provideAuth, getAuth } from "@angular/fire/auth";
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+
+// FormsModule
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { DialogRef } from '@angular/cdk/dialog';
 
 //Imports di angular material
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -37,11 +51,13 @@ import { OptionsComponent } from './components/options/options.component';
 
 @NgModule({
   declarations: [
+    AppComponent,
     GameComponent,
     VehiclesComponent,
     HomeComponent,
     FunctionalitiesComponent,
     LoginComponent,
+    RegisterComponent,
     MenuComponent,
     EndscreenComponent,
     NotFoundComponent,
@@ -74,7 +90,9 @@ import { OptionsComponent } from './components/options/options.component';
     MatRadioModule,
     MatInputModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    AngularSvgIconModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase)
   ]
 })
 
