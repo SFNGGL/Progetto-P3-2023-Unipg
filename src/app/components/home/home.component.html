@@ -1,19 +1,29 @@
 <main class="main-body">
   <div class="login">
     <div class="log-in">
-      <button type="login-button" [disabled]="!isLogin()">Login</button>
+      <button
+        type="login-button"
+        [disabled]="isLogin()"
+        (click)="login()"
+        *ngIf="!isLogin()">
+        Login</button>
     </div>
     <div class="logged-in">
-      <div class="pfp-icon">
+      <div class="pfp-icon" *ngIf="isLogin()">
         <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" viewBox="0 0 75 75">
           <circle cx="37.5" cy="37.5" r="37.5" fill="white" fill-opacity="0.39"/>
         </svg>
       </div>
-      <button type="logout-button" [disabled]="isLogin()" (click)="logout()">Logout</button>
+      <button
+        type="logout-button"
+        [disabled]="!isLogin()"
+        (click)="logout()"
+        *ngIf="isLogin()">
+        Logout</button>
     </div>
   </div>
 
-  <div class="Mainmenu" style="width: 600px; height: 800px; position: relative">
+  <div class="Mainmenu">
     <div class="MainMenuDiv">
       <div class="TitleDiv" >
         <div class="TextTitleDiv" >
@@ -22,7 +32,14 @@
       </div>
       <div class="OptionsDiv">
         <div class="TextOptDiv">
-          <div class="GiocaOpzioni" >Gioca<br/><br/>Opzioni</div>
+          <button
+            gioca-button
+            class="bottone"
+            (click)=game()>Gioca</button>
+          <button
+            opzioni-button
+            class="bottone"
+            (click)=options()>Opzioni</button>
         </div>
       </div>
     </div>

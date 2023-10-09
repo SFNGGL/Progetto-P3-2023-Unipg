@@ -11,13 +11,7 @@ import { AuthService } from "../../servizi/auth.service";
 export class HomeComponent {
   constructor(private auth: AuthService, private router: Router) { }
 
-  public options = [
-    'Gioca',
-    'Opzioni',
-    'Esci'
-  ]
-
-  public credits = 'Stefano Gigli - Esame di programmazione 3 - Unipg - 2023'
+  public footer_credits = 'Stefano Gigli - Esame di programmazione 3 - Unipg - 2023'
 
   isLogin() { return this.auth.isLoggedIn }
 
@@ -27,8 +21,19 @@ export class HomeComponent {
 
   login() { this.router.navigate(['login']) }
 
-  game() { this.router.navigate(['game']) }
+  game() {
+    if (!this.isLogin()) {
+      alert("Per favore, eseguire il login")
+      return
+    }
+    this.router.navigate(['game'])
+  }
 
-  logout() { this.auth.logout() }
+  logout() {
+    this.auth.logout()
+    this.router.navigate([''])
+  }
+
+  options() { this.router.navigate(['options']) }
 
 }

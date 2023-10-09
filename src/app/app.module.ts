@@ -93,7 +93,8 @@ import { OptionsComponent } from './components/options/options.component';
     MatFormFieldModule,
     AngularSvgIconModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase)
-  ]
+  ],
+  exports: [AppRoutingModule]
 })
 
 export class AppModule { }

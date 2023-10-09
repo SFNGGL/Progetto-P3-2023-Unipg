@@ -1,131 +1,131 @@
-.MainMenu {
-  width: 600px;
-  height: 800px;
-  flex-shrink: 0;
-}
-
-.log-in {
-  width: 250px;
-  height: 100px;
-  flex-shrink: 0;
-  display: flex;
-  width: 250px;
-  height: 100px;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  color: #000;
-  text-align: center;
-  font-family: Inter;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  background: #D9D9D9;
-}
-
-.logged-in {
-  width: 250px;
-  height: 100px;
-  flex-shrink: 0;
-  display: inline-block;
-  width: 250px;
-  height: 100px;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  color: #000;
-  text-align: center;
-  font-family: Inter;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  background: #D9D9D9;
-}
-
+/* .MainMenu { */
+/*   width: 600px; */
+/*   height: 800px; */
+/*   flex-shrink: 0; */
+/* } */
+/**/
+/* .log-in { */
+/*   width: 250px; */
+/*   height: 100px; */
+/*   flex-shrink: 0; */
+/*   display: flex; */
+/*   width: 250px; */
+/*   height: 100px; */
+/*   flex-direction: column; */
+/*   justify-content: center; */
+/*   flex-shrink: 0; */
+/*   color: #000; */
+/*   text-align: center; */
+/*   font-family: Inter; */
+/*   font-size: 48px; */
+/*   font-style: normal; */
+/*   font-weight: 400; */
+/*   line-height: normal; */
+/*   background: #D9D9D9; */
+/* } */
+/**/
+/* .logged-in { */
+/*   width: 250px; */
+/*   height: 100px; */
+/*   flex-shrink: 0; */
+/*   display: inline-block; */
+/*   width: 250px; */
+/*   height: 100px; */
+/*   flex-direction: column; */
+/*   justify-content: center; */
+/*   flex-shrink: 0; */
+/*   color: #000; */
+/*   text-align: center; */
+/*   font-family: Inter; */
+/*   font-size: 48px; */
+/*   font-style: normal; */
+/*   font-weight: 400; */
+/*   line-height: normal; */
+/*   background: #D9D9D9; */
+/* } */
+/**/
 .pfp-icon {
-  width: 100px;
-  height: 100px;
+  width: 77px;
+  height: 77px;
   flex-shrink: 0;
   background: #373737;
 }
-
-svg {
-  width: 75px;
-  height: 75px;
-  fill: rgba(255,255,255,0.39)
-}
-
-.MainMenuDiv {
-  width: 600px;
-  height: 800px;
-  left: 0px;
-  top: 0px;
-  position: absolute;
-  background: #D9D9D9;
-}
-
-.OptionsDiv {
-  width: 600px;
-  height: 482px;
-  left: 0px;
-  top: 318px;
-  position: absolute;
-  background: #BDBDBD;
-}
-
-.TextOptDiv {
-  width: 350px;
-  height: 375px;
-  left: 125px;
-  top: 371px;
-  position: absolute;
-  background: #D9D9D9;
-}
-
-.GiocaOpzioni {
-  width: 350px;
-  height: 375px;
-  left: 125px;
-  top: 371px;
-  position: absolute;
-  text-align: center;
-  color: black;
-  font-size: 48px;
-  font-family: Inter;
-  font-weight: 400;
-  word-wrap: break-word
-}
-
-.TitleDiv {
-  width: 600px;
-  height: 318px;
-  left: 0px;
-  top: 0px;
-  position: absolute;
-  background: #999999;
-}
-
-.TextTitleDiv {
-  width: 500px;
-  height: 140px;
-  left: 50px;
-  top: 89px;
-  position: absolute;
-  background: #D9D9D9;
-}
-
-.title {
-  width: 501px;
-  height: 140px;
-  left: 49px;
-  top: 89px;
-  position: absolute;
-  text-align: center;
-  color: black;
-  font-size: 86px;
-  font-family: Inter;
-  font-weight: 400;
-  word-wrap: break-word
-}
+/**/
+/* svg { */
+/*   width: 75px; */
+/*   height: 75px; */
+/*   fill: rgba(255,255,255,0.39) */
+/* } */
+/**/
+/* .MainMenuDiv { */
+/*   width: 600px; */
+/*   height: 800px; */
+/*   left: 0px; */
+/*   top: 0px; */
+/*   position: absolute; */
+/*   background: #D9D9D9; */
+/* } */
+/**/
+/* .OptionsDiv { */
+/*   width: 600px; */
+/*   height: 482px; */
+/*   left: 0px; */
+/*   top: 318px; */
+/*   position: absolute; */
+/*   background: #BDBDBD; */
+/* } */
+/**/
+/* .TextOptDiv { */
+/*   width: 350px; */
+/*   height: 375px; */
+/*   left: 125px; */
+/*   top: 371px; */
+/*   position: absolute; */
+/*   background: #D9D9D9; */
+/* } */
+/**/
+/* .GiocaOpzioni { */
+/*   width: 350px; */
+/*   height: 375px; */
+/*   left: 125px; */
+/*   top: 371px; */
+/*   position: absolute; */
+/*   text-align: center; */
+/*   color: black; */
+/*   font-size: 48px; */
+/*   font-family: Inter; */
+/*   font-weight: 400; */
+/*   word-wrap: break-word */
+/* } */
+/**/
+/* .TitleDiv { */
+/*   width: 600px; */
+/*   height: 318px; */
+/*   left: 0px; */
+/*   top: 0px; */
+/*   position: absolute; */
+/*   background: #999999; */
+/* } */
+/**/
+/* .TextTitleDiv { */
+/*   width: 500px; */
+/*   height: 140px; */
+/*   left: 50px; */
+/*   top: 89px; */
+/*   position: absolute; */
+/*   background: #D9D9D9; */
+/* } */
+/**/
+/* .title { */
+/*   width: 501px; */
+/*   height: 140px; */
+/*   left: 49px; */
+/*   top: 89px; */
+/*   position: absolute; */
+/*   text-align: center; */
+/*   color: black; */
+/*   font-size: 86px; */
+/*   font-family: Inter; */
+/*   font-weight: 400; */
+/*   word-wrap: break-word */
+/* } */

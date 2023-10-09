@@ -7,11 +7,14 @@ import { GameComponent } from "./components/game/game.component";
 import { EndscreenComponent } from "./components/endscreen/endscreen.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { OptionsComponent } from './components/options/options.component';
+import { RegisterComponent } from "./components/register/register.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'game', component: GameComponent },
   { path: 'options', component: OptionsComponent },
   { path: 'end', component: EndscreenComponent },
