@@ -16,17 +16,27 @@ endif
 badd +9 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/app-routing.module.ts
 badd +1 ~/Desktop/Prog3Proj/demogioco/src/app/app.component.html
 badd +34 src/app/app.module.ts
-badd +38 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/game/game.component.ts
+badd +41 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/game/game.component.ts
 badd +1 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/game/game.component.html
-badd +133 ~/Desktop/Prog3Proj/base/gioco_liz.js
-badd +5 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/vehicles/vehicles.component.ts
-badd +19 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/servizi/env_vars.ts
+badd +30 ~/Desktop/Prog3Proj/base/gioco_liz.js
+badd +4 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/vehicles/vehicles.component.ts
+badd +1 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/assets/basefiles/gioco.js
+badd +1 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/assets/basefiles/screen.js
+badd +22 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/assets/basefiles/sketch.js
+badd +1 ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/functionalities/functionalities.component.ts
 argglobal
 %argdel
-edit ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/game/game.component.html
+edit ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/game/game.component.ts
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+wincmd _ | wincmd |
+vsplit
+2wincmd h
+wincmd w
+wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
 wincmd t
@@ -36,14 +46,44 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
+wincmd =
 argglobal
-balt ~/Desktop/Prog3Proj/base/gioco_liz.js
-let s:l = 1 - ((0 * winheight(0) + 33) / 67)
+balt ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/game/game.component.html
+let s:l = 23 - ((22 * winheight(0) + 30) / 60)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 23
+normal! 010|
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/vehicles/vehicles.component.ts", ":p")) | buffer ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/vehicles/vehicles.component.ts | else | edit ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/vehicles/vehicles.component.ts | endif
+if &buftype ==# 'terminal'
+  silent file ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/vehicles/vehicles.component.ts
+endif
+balt ~/Desktop/Prog3Proj/base/gioco_liz.js
+let s:l = 4 - ((3 * winheight(0) + 30) / 60)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 4
+normal! 033|
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/Desktop/Prog3Proj/base/gioco_liz.js", ":p")) | buffer ~/Desktop/Prog3Proj/base/gioco_liz.js | else | edit ~/Desktop/Prog3Proj/base/gioco_liz.js | endif
+if &buftype ==# 'terminal'
+  silent file ~/Desktop/Prog3Proj/base/gioco_liz.js
+endif
+balt ~/Desktop/Prog3Proj/Progetto-P3-2023-Unipg/src/app/components/game/game.component.html
+let s:l = 30 - ((8 * winheight(0) + 30) / 60)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 30
+normal! 024|
+wincmd w
+3wincmd w
+wincmd =
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
