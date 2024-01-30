@@ -65,6 +65,20 @@ export class FirebaseService implements OnInit{
     )[0];
   }
 
+  async retrieveIdByEmail(email: string) {
+    return (
+      await new Promise<any>((resolve) => {
+        this.db.collection(
+          'scores',
+          ref => ref.where('email', '==', email)
+            .limit(1)
+        )
+        .snapshotChanges()
+        .subscribe(score => resolve(score))
+      })
+    )[0].payload.doc.id;
+  }
+
   // Rimozione singola
   deleteScore(id: string){
     return this.http.delete(`${this.autolocate("punteggio")}/-${id}.json`)
