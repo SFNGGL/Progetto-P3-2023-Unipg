@@ -115,31 +115,4 @@ export class FirebaseService implements OnInit{
       await this.db.collection(this.scoresCollection).add(newScore);
     }
   }
-
-  // Modifica
-  // updateMarble(id: number, body: Score){
-  //   // return this.http.patch(`${url}/-${id}.json`, body)
-  //   return this.http.patch(`${this.autolocate("marmi")}/-${id}.json`, body)
-  // }
-
-  // retrievePlayers(){
-  //   return this.http.get(this.autolocate("ordini"))
-  // }
-  // insertOnePlayer(id: string){
-  //   return this.http.get(this.autolocate("ordini/"+id))
-  // }
-
-  // insertPlayer(body: OrdineDB) {
-  //   return this.http.post(this.autolocate("ordini"), body)
-  // }
-
-  // deletePlayer(id: string){
-  //   return this.http.delete(this.autolocate("ordini/"+id))
-  // }
-
-  // deleteAllOrdini(){}
-
-  // updatePlayer(id: string, body: OrdineDB){
-  //   return this.http.patch(this.autolocate("ordini/"+id), body)
-  // }
 }
