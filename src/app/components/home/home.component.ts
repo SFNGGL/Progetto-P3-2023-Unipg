@@ -9,7 +9,8 @@ import { AuthService } from "../../servizi/auth.service";
 })
 
 export class HomeComponent {
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router) {
+  }
 
   public footer_credits = 'Stefano Gigli - Esame di programmazione 3 - Unipg - 2023'
 
@@ -22,10 +23,10 @@ export class HomeComponent {
   login() { this.router.navigate(['login']) }
 
   game() {
-    if (!this.isLogin()) {
-      alert("Per favore, eseguire il login")
-      return
-    }
+    // if (!this.isLogin()) {
+    //   alert("Per favore, eseguire il login")
+    //   return
+    // }
     this.router.navigate(['game'])
   }
 

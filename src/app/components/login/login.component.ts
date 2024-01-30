@@ -10,7 +10,7 @@ export class LoginComponent {
 
   email: string = ''
   password: string = ''
-
+  nick: string = ''
 
   constructor(private auth: AuthService) { }
 

@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { AngularFirestore } from '@angular/fire/compat/firestore'
 import { Router } from '@angular/router';
-// import { user } from 'rxfire/auth';
 
 
 @Injectable({
@@ -18,7 +17,11 @@ export class AuthService {
   userEmail: string = ''
 
   //Inniettiamo il pacchetto nel costruttore
-  constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) { }
+  constructor(
+    private fireauth: AngularFireAuth, 
+    private router: Router, 
+    private firestore: AngularFirestore) { 
+    }
 
   //MetodoLogin
   login(email: string, password: string) {
@@ -85,13 +88,24 @@ export class AuthService {
     this.firestore.collection('users').doc(user.uid).set(userData, { merge: true }) //Grazie a doc() ottengo un riferimento specifico all'interno della raccolta
       .then(() => {
         console.log('Informazioni utente salvate con successo in Firestore');
-        this.checkIfAdmin(user.uid)
+        if (!(this.checkMail(user.email))){
+          this.checkIfAdmin(user.uid)
+        } else {
+          this.isAdmin = true;
+        }
       })
       .catch(error => {
         console.error('Errore nel salvataggio delle informazioni utente:', error);
       });
   }
 
+  checkMail(mail : string) {
+    if (mail == 'admin@admin.com') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   // Funzione per verificare se il campo "isAdmin" esiste ed è true
   checkIfAdmin(userId: string) {

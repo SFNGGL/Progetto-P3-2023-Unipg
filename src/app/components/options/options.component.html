@@ -1,1 +1,18 @@
-<p>options works!</p>
+<div>
+  <h2>Select an Option</h2>
+
+  <div *ngFor="let group of options" class="option-group" id="group">
+    <h3>{{ group.groupName }}</h3>
+
+    <div *ngFor="let option of group.options" id="options">
+      <button (click)="onOptionClick(option)" 
+      [class.selected]="option === selectedOption">
+        {{ option }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="selectedOption">
+    <p>You selected: {{ selectedOption }}</p>
+  </div>
+</div>

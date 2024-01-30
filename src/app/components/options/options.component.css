@@ -1,0 +1,23 @@
+/* option-page.component.css */
+
+div {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff; /* Set the background color to blue */
+}
+
+.option-group {
+  margin-bottom: 20px;
+}
+
+button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+button.selected {
+  background-color: #ff3300; /* Add your preferred styling for selected button */
+  color: #fff; /* Add your preferred styling for text color on selected button */
+}

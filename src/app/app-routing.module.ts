@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'game', component: GameComponent },
   { path: 'options', component: OptionsComponent },
-  { path: 'end', component: EndscreenComponent },
+  { path: 'endscreen', component: EndscreenComponent },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '/404' }
 ];
