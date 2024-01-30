@@ -13,13 +13,13 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class EndscreenComponent implements OnInit{
   
-  public info : Score = {
+  public info : Score = { // Volendo si potrebbe deserializzare anche nelle funzioni che fanno retrieve
     email: this.game.player_info,
     car: this.game.car,
     highscore: this.game.score
   }
-  all_emails : any = [];
-  all_players : any = [];
+  public scores: any = [];
+  public isNewHighscore: boolean = false;
 
   constructor (
     private auth : AuthService,
@@ -29,28 +29,12 @@ export class EndscreenComponent implements OnInit{
   ) {}
 
   async ngOnInit(): Promise<void> {
+    let old_score = await this.db.retrieveScoreByEmail(this.info.email);
+    if (old_score === undefined || this.info.highscore > old_score.highscore) {
+      this.isNewHighscore = true;
+      await this.db.updateHighscore(this.info);
+    }
 
-    // prendi gli account salvati
-    /*this.db.retrieveScore().subscribe((data : any) => {
-      Object.keys(data).map((key : any) => {
-        this.all_emails.push(data[key]['email']);
-        this.all_players[data[key]['email']] = data[key];
-      })
-      console.log('Emails\n' + this.all_emails);
-      console.log('Players\n' + this.all_players);
-    })
-    // controlla se l'utente e' gia' presente
-    // test
-    this.auth.userEmail = 'hello@login.com';
-    console.log('Email\n' + this.auth.userEmail);
-    for (let index = 0; index < this.all_emails.length; index++) {
-      const mail = this.all_emails[index];
-      if (this.auth.userEmail == mail) {
-        // trovato
-        console.log(this.auth.userEmail, 'è nel db');
-      } else {
-        console.log("l'utente ", this.auth.userEmail, " non e' nel db")
-      }
-    }*/
+    this.scores = await this.db.retrieveScore();
   }
 }

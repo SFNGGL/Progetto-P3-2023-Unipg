@@ -20,6 +20,7 @@ export class FirebaseService implements OnInit{
   static path_to_DB = 'https://progettoweb3-33de4-default-rtdb.europe-west1.firebasedatabase.app';
   static path = 'https://progettoweb3-33de4-default-rtdb.europe-west1.firebasedatabase.app/'
   static id_list : number[] = [];
+  private scoresCollection: string = 'scores';
 
   constructor(
     private http: HttpClient,
@@ -45,7 +46,7 @@ export class FirebaseService implements OnInit{
   // per get specifici: url_DB/id_schema.json <---
   retrieveScore(){
     return new Promise<any>((resolve) => {
-      this.db.collection('scores')
+      this.db.collection(this.scoresCollection)
       .valueChanges()
       .subscribe(score => resolve(score))
     });
@@ -55,7 +56,7 @@ export class FirebaseService implements OnInit{
     return (
       await new Promise<any>((resolve) => {
         this.db.collection(
-          'scores',
+          this.scoresCollection,
           ref => ref.where('email', '==', email)
             .limit(1)
         )
@@ -69,7 +70,7 @@ export class FirebaseService implements OnInit{
     return (
       await new Promise<any>((resolve) => {
         this.db.collection(
-          'scores',
+          this.scoresCollection,
           ref => ref.where('email', '==', email)
             .limit(1)
         )
@@ -79,16 +80,23 @@ export class FirebaseService implements OnInit{
     )[0].payload.doc.id;
   }
 
-  // Rimozione singola
-  async deleteScoreByEmail(email: string){
+  async getDocByEmail(email: string) {
     let id = await this.retrieveIdByEmail(email);
-    this.db.collection(
-      'scores',
+    return this.db.collection(
+      this.scoresCollection,
       ref => ref.where('email', '==', email)
         .limit(1)
       )
       .doc(id)
-      .delete();
+  }
+
+  // Rimozione singola
+  async deleteScoreByEmail(email: string){
+    try {
+      (await this.getDocByEmail(email)).delete()
+    } catch {
+      console.log(`Unable to delete score related to ${email}`)
+    }
   }
 
   // Rimozione totale
@@ -97,6 +105,15 @@ export class FirebaseService implements OnInit{
     collection.forEach( (element: any) => {
       this.deleteScoreByEmail(element.email); // Un pò inefficiente, ma non ce ne preoccupiamo
     });
+  }
+
+  async updateHighscore(newScore: Score) {
+    try{
+      let doc = await this.getDocByEmail(newScore.email);
+      await doc.update(newScore);
+    } catch { // Da verificare se esiste una specie di "upsert"
+      await this.db.collection(this.scoresCollection).add(newScore);
+    }
   }
 
   // Modifica
