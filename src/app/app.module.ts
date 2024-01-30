@@ -21,13 +21,13 @@ import { AuthService } from "./servizi/auth.service";
 
 // import di Angular Fire
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
-import { environment } from "../environments/environments";
+import { environment } from "../environments/environment";
 import { provideAuth, getAuth } from "@angular/fire/auth";
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { getAnalytics } from "firebase/analytics";
-
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 // FormsModule
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -74,6 +74,7 @@ import { OptionsComponent } from './components/options/options.component';
   ],
   bootstrap: [AppComponent],
   imports: [
+    AngularFirestoreModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
@@ -93,7 +94,7 @@ import { OptionsComponent } from './components/options/options.component';
     MatDialogModule,
     MatFormFieldModule,
     AngularSvgIconModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   exports: [AppRoutingModule]
 })
