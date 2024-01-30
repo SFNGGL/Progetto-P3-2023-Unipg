@@ -89,7 +89,7 @@ export class AuthService {
       .then(() => {
         console.log('Informazioni utente salvate con successo in Firestore');
         if (!(this.checkMail(user.email))){
-          this.checkIfAdmin(user.uid)
+          this.checkIfAdmin()
         } else {
           this.isAdmin = true;
         }
@@ -108,26 +108,8 @@ export class AuthService {
   }
 
   // Funzione per verificare se il campo "isAdmin" esiste ed è true
-  checkIfAdmin(userId: string) {
-    // Ottieni un riferimento al documento dell'utente nella collezione "users"
-    const userRef = this.firestore.collection('users').doc(userId);
-    userRef.get().subscribe((docSnapshot) => {                                                    //Serve per ottenere il riferimento al documento
-      if (docSnapshot.exists) {
-        const userData = docSnapshot.data() as { isAdmin: boolean };                              //Il documento esiste, verifica il campo "isAdmin"
-        const isAdmin = userData.isAdmin;                                                         //La riga sopra serve a evitare l'errore: la proprietà 'isAdmin' non esiste nel tipo 'unknown'.
-        if (isAdmin === true) {
-          console.log('L\'utente è un amministratore.');                                          // Il campo "isAdmin" esiste ed è true
-          this.isAdmin = true;
-        } else {
-          console.log('L\'utente non è un amministratore.');                                      // Il campo "isAdmin" esiste, ma è false
-          this.isAdmin = false;
-        }
-      } else {
-        // Il documento non esiste
-        console.log('L\'utente non esiste o il documento non contiene il campo "isAdmin".');      //Il campo "isAdmin" non esiste proprio. OPZIONE PIU' RICORRENTE
-        this.isAdmin = false;
-      }
-    });
+  async checkIfAdmin() {
+    return 'fGPqAWaDayRT0qVOazhVU7CEUOE3' === (await this.fireauth.currentUser)!.uid
   }
 
 
