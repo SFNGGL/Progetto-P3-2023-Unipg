@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./endscreen.component.css']
 })
 export class EndscreenComponent implements OnInit{
-  
+
   public info : Score = JSON.parse(localStorage.getItem('currentGame')!); // Siamo sicuri che a questo punto dell'esecuzione currentGame sia impostato
   public scores: any = [];
   public isNewHighscore: boolean = false;
