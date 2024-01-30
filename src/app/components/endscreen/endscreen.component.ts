@@ -4,7 +4,7 @@ import { RouterLink, Router } from "@angular/router";
 import { AuthService } from "../../servizi/auth.service";
 import { FirebaseService } from "src/app/servizi/firebase.service";
 import { Score } from '../../servizi/score.form';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-endscreen',
@@ -13,19 +13,12 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class EndscreenComponent implements OnInit{
   
-  public info : Score = { // Volendo si potrebbe deserializzare anche nelle funzioni che fanno retrieve
-    email: this.game.player_info,
-    car: this.game.car,
-    highscore: this.game.score
-  }
+  public info : Score = JSON.parse(localStorage.getItem('currentGame')!); // Siamo sicuri che a questo punto dell'esecuzione currentGame sia impostato
   public scores: any = [];
   public isNewHighscore: boolean = false;
 
   constructor (
-    private auth : AuthService,
-    private router : Router,
-    private game : GameComponent,
-    private db : FirebaseService
+    private db : FirebaseService,
   ) {}
 
   async ngOnInit(): Promise<void> {

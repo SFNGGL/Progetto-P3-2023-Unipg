@@ -23,6 +23,14 @@ export class GameComponent implements OnInit {
   car : string = "Car";
   score: number = 0;
 
+  private save() {
+    localStorage.setItem('currentGame', JSON.stringify({
+      email: this.player_info,
+      car: this.car,
+      highscore: this.score
+    }))
+  }
+
   ngOnInit(): void {
 
     let button_1 : any;
@@ -46,6 +54,7 @@ export class GameComponent implements OnInit {
         button_1.mousePressed(() => {
           if (this.score < 0) {this.score = 0;}
           this.score++;
+          this.save();
         })
 
         button_2.mousePressed(() => {
