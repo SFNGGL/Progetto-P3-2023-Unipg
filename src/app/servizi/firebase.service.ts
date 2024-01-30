@@ -2,6 +2,7 @@ import { Injectable, OnInit, importProvidersFrom } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NONE_TYPE } from '@angular/compiler';
 import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Score } from "../servizi/score.form";
 
 @Injectable({
@@ -20,7 +21,10 @@ export class FirebaseService implements OnInit{
   static path = 'https://progettoweb3-33de4-default-rtdb.europe-west1.firebasedatabase.app/'
   static id_list : number[] = [];
 
-  constructor(private http: HttpClient) {} //In questo modo possiamo utilizzare il modulo http tramite la variabile.
+  constructor(
+    private http: HttpClient,
+    public db: AngularFirestore
+    ) {} //In questo modo possiamo utilizzare il modulo http tramite la variabile.
   
   ngOnInit(): void {
     
@@ -40,12 +44,25 @@ export class FirebaseService implements OnInit{
   // Get
   // per get specifici: url_DB/id_schema.json <---
   retrieveScore(){
-    // return this.http.get(url);
-    // fa un retrieve dell'intero DB, per ngOnInit
-    return this.http.get(this.autolocate("punteggio"))
+    return new Promise<any>((resolve) => {
+      this.db.collection('scores')
+      .valueChanges()
+      .subscribe(score => resolve(score))
+    });
   }
-  retrieveIOneScore(id: string){
-    return this.http.get(this.autolocate("punteggio/"+id))
+
+  async retrieveScoreByEmail(email: string) {
+    return (
+      await new Promise<any>((resolve) => {
+        this.db.collection(
+          'scores',
+          ref => ref.where('email', '==', email)
+            .limit(1)
+        )
+        .valueChanges()
+        .subscribe(score => resolve(score))
+      })
+    )[0];
   }
 
   // Rimozione singola

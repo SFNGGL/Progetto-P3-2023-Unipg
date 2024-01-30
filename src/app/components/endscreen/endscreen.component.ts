@@ -4,6 +4,7 @@ import { RouterLink, Router } from "@angular/router";
 import { AuthService } from "../../servizi/auth.service";
 import { FirebaseService } from "src/app/servizi/firebase.service";
 import { Score } from '../../servizi/score.form';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-endscreen',
@@ -27,9 +28,10 @@ export class EndscreenComponent implements OnInit{
     private db : FirebaseService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
     // prendi gli account salvati
-    this.db.retrieveScore().subscribe((data : any) => {
+    /*this.db.retrieveScore().subscribe((data : any) => {
       Object.keys(data).map((key : any) => {
         this.all_emails.push(data[key]['email']);
         this.all_players[data[key]['email']] = data[key];
@@ -49,6 +51,6 @@ export class EndscreenComponent implements OnInit{
       } else {
         console.log("l'utente ", this.auth.userEmail, " non e' nel db")
       }
-    }
+    }*/
   }
 }
