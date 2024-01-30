@@ -80,8 +80,15 @@ export class FirebaseService implements OnInit{
   }
 
   // Rimozione singola
-  deleteScore(id: string){
-    return this.http.delete(`${this.autolocate("punteggio")}/-${id}.json`)
+  async deleteScoreByEmail(email: string){
+    let id = await this.retrieveIdByEmail(email);
+    this.db.collection(
+      'scores',
+      ref => ref.where('email', '==', email)
+        .limit(1)
+      )
+      .doc(id)
+      .delete();
   }
 
   // Rimozione totale
