@@ -92,7 +92,12 @@ export class FirebaseService implements OnInit{
   }
 
   // Rimozione totale
-  deleteAllScores(){}
+  async deleteAllScores() {
+    let collection = await this.retrieveScore();
+    collection.forEach( (element: any) => {
+      this.deleteScoreByEmail(element.email); // Un pò inefficiente, ma non ce ne preoccupiamo
+    });
+  }
 
   // Modifica
   // updateMarble(id: number, body: Score){
