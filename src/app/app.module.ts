@@ -49,6 +49,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
 import { OptionsComponent } from './components/options/options.component';
+import { ScoreCardComponent } from './components/score-card/score-card.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { OptionsComponent } from './components/options/options.component';
     MenuComponent,
     EndscreenComponent,
     NotFoundComponent,
-    OptionsComponent
+    OptionsComponent,
+    ScoreCardComponent
   ],
   providers: [
     {
