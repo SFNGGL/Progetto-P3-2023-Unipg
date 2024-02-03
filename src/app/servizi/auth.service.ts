@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { AngularFirestore } from '@angular/fire/compat/firestore'
 import { Router } from '@angular/router';
+import { FirebaseService } from './firebase.service';
 
 
 @Injectable({
@@ -19,18 +20,24 @@ export class AuthService {
   //Inniettiamo il pacchetto nel costruttore
   constructor(
     private fireauth: AngularFireAuth, 
+    private db: FirebaseService,
     private router: Router, 
     private firestore: AngularFirestore) { 
     }
 
   //MetodoLogin
   login(email: string, password: string) {
-    this.fireauth.signInWithEmailAndPassword(email, password).then(() => {          //Metodo che accede ad un istanza già esistente
+    this.fireauth.signInWithEmailAndPassword(email, password).then(async () => {          //Metodo che accede ad un istanza già esistente
       localStorage.setItem('token', 'true')                                          //Crea l'item nello store locale del browser
-      this.router.navigate([''])                                                    //Mi riporta alla home dopo il login
       this.isLoggedIn = true
       this.userEmail = email                                                          //Salva la mail solo se l'utente è salvato
+      if (await this.checkIfAdmin()) {
+        this.isAdmin = true;
+      } else {
+        this.isAdmin = false;
+      }
       console.log("Il login è andato a buon fine, email: " + this.userEmail)
+      this.router.navigate([''])                                                    //Mi riporta alla home dopo il login
     }, err => {
       alert('Oops! Qualcosa è andato storto!')                                      //Messaggio di errore nel caso di mancato login
       this.router.navigate(['/login'])                                              //Mi riporta alla pagina di login
@@ -86,13 +93,8 @@ export class AuthService {
 
     // Crea o aggiorna il documento utente nel Firestore
     this.firestore.collection('users').doc(user.uid).set(userData, { merge: true }) //Grazie a doc() ottengo un riferimento specifico all'interno della raccolta
-      .then(() => {
+      .then(async () => {
         console.log('Informazioni utente salvate con successo in Firestore');
-        if (!(this.checkMail(user.email))){
-          this.checkIfAdmin()
-        } else {
-          this.isAdmin = true;
-        }
       })
       .catch(error => {
         console.error('Errore nel salvataggio delle informazioni utente:', error);
@@ -109,9 +111,6 @@ export class AuthService {
 
   // Funzione per verificare se il campo "isAdmin" esiste ed è true
   async checkIfAdmin() {
-    return 'fGPqAWaDayRT0qVOazhVU7CEUOE3' === (await this.fireauth.currentUser)!.uid
+    return 'fGPqAWaDayRT0qVOazhVU7CEUOE3' === (await this.fireauth.currentUser)!.uid;
   }
-
-
 }
-
