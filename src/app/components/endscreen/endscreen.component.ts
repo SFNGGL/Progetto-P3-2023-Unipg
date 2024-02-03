@@ -22,12 +22,12 @@ export class EndscreenComponent implements OnInit{
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.scores = await this.db.retrieveScore();
+
     let old_score = await this.db.retrieveScoreByEmail(this.info.email);
     if (old_score === undefined || this.info.highscore > old_score.highscore) {
       this.isNewHighscore = true;
       await this.db.updateHighscore(this.info);
     }
-
-    this.scores = await this.db.retrieveScore();
   }
 }
