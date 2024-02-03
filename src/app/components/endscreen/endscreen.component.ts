@@ -22,7 +22,8 @@ export class EndscreenComponent implements OnInit{
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.scores = await this.db.retrieveScore();
+    this.scores = (await this.db.retrieveScore())
+      .filter((score: any) => score.email.length > 0); // Rimuoviamo dalla classifica il giocatore "anonimo"
 
     let old_score = await this.db.retrieveScoreByEmail(this.info.email);
     if (old_score === undefined || this.info.highscore > old_score.highscore) {
