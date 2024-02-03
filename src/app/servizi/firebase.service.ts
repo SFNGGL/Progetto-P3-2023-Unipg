@@ -46,9 +46,16 @@ export class FirebaseService implements OnInit{
   // per get specifici: url_DB/id_schema.json <---
   retrieveScore(){
     return new Promise<any>((resolve) => {
-      this.db.collection(this.scoresCollection)
-      .valueChanges()
-      .subscribe(score => resolve(score))
+      this.db.collection(
+        this.scoresCollection,
+        ref => ref.orderBy('highscore', 'desc')
+      )
+      .get()
+      .subscribe(
+        score => resolve(
+          score.docs.map((doc) => doc.data())
+        )
+      )
     });
   }
 
@@ -60,8 +67,12 @@ export class FirebaseService implements OnInit{
           ref => ref.where('email', '==', email)
             .limit(1)
         )
-        .valueChanges()
-        .subscribe(score => resolve(score))
+        .get()
+        .subscribe(
+          score => resolve(
+            score.docs.map((doc) => doc.data())
+          )
+        )
       })
     )[0];
   }
@@ -74,10 +85,14 @@ export class FirebaseService implements OnInit{
           ref => ref.where('email', '==', email)
             .limit(1)
         )
-        .snapshotChanges()
-        .subscribe(score => resolve(score))
+        .get()
+        .subscribe(
+          score => resolve(
+            score.docs.map((doc) => doc.id)
+          )
+        )
       })
-    )[0].payload.doc.id;
+    )[0];
   }
 
   async getDocByEmail(email: string) {
