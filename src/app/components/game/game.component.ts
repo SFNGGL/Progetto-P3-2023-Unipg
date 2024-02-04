@@ -33,6 +33,11 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if (!this.auth.isLoggedIn) {
+      this.router.navigate(['']);
+      return;
+    }
+
     let button_1 : any;
     let button_2 : any;
     let score_display : any;

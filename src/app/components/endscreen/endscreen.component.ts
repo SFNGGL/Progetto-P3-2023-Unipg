@@ -15,13 +15,21 @@ export class EndscreenComponent implements OnInit{
 
   public info : Score = JSON.parse(localStorage.getItem('currentGame')!); // Siamo sicuri che a questo punto dell'esecuzione currentGame sia impostato
   public scores: any = [];
+  public isAdmin: boolean = false;
   public isNewHighscore: boolean = false;
 
   constructor (
     private db : FirebaseService,
+    private auth: AuthService,
+    private router: Router,
   ) {}
 
   async ngOnInit(): Promise<void> {
+    if (!this.auth.isLoggedIn) {
+      this.router.navigate(['']);
+      return;
+    }
+    this.isAdmin = this.auth.isAdmin;
     this.scores = (await this.db.retrieveScore())
       .filter((score: any) => score.email.length > 0); // Rimuoviamo dalla classifica il giocatore "anonimo"
 
