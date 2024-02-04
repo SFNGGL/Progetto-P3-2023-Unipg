@@ -1,15 +1,24 @@
 <body>
 	<h1 id="endscreen-title">GAME OVER</h1>
 	<div id="greetings-container">
-		<div *ngIf="isNewHighscore; else noHighscore">
-			Complimenti, hai battuto il tuo record :D
+		<div *ngIf="isAdmin; else scoreReport">
+			Benvenuto admin!
 		</div>
-		<ng-template #noHighscore>
-			Purtroppo non sei riuscito a battere il tuo precedente record :(
+		<ng-template #scoreReport>
+			<div *ngIf="isNewHighscore; else noHighscore">
+				Complimenti, hai battuto il tuo record :D
+			</div>
+			<ng-template #noHighscore>
+				Purtroppo non sei riuscito a battere il tuo precedente record :(
+			</ng-template>
+			<div id="score">
+				Punteggio => {{this.info.highscore}}
+			</div>
 		</ng-template>
-		<div id="score">
-			Punteggio => {{this.info.highscore}}
-		</div>
+	</div>
+	<div *ngIf="scoresEmpty()" class="loadingWheelContainer">
+		<!-- Loading wheel: https://loading.io/css/ -->
+		<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 	</div>
 	<div *ngFor="let score of scores; index as i">
 		<app-score-card email={{score.email}} score={{score.highscore}} placement={{i+1}}></app-score-card>
