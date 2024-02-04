@@ -1,47 +1,35 @@
-<main class="main-body">
-  <div class="login">
-    <div class="log-in">
-      <button
-        type="login-button"
-        [disabled]="isLogin()"
-        (click)="login()"
-        *ngIf="!isLogin()">
-        Login</button>
-    </div>
-    <div class="logged-in">
-      <div class="pfp-icon" *ngIf="isLogin()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" viewBox="0 0 75 75">
-          <circle cx="37.5" cy="37.5" r="37.5" fill="white" fill-opacity="0.39"/>
-        </svg>
+<body>
+  <div id="home-menu">
+    <h1 class="text-animation">
+      Benvenuto sul miglior gioco del momento
+    </h1>
+    <div *ngIf="isLogin(); else login">
+      <div id="home-welcome-user">
+        Ciao {{this.getEMail()}}
       </div>
-      <button
-        type="logout-button"
-        [disabled]="!isLogin()"
-        (click)="logout()"
-        *ngIf="isLogin()">
-        Logout</button>
+      <div *ngIf="isAdmin(); else play">
+        <button class="home-button" (click)="endscreen()">
+          CONSULTA LA CLASSIFICA
+        </button>
+      </div>
+      <ng-template #play>
+        <button class="home-button" (click)="game()">
+          GIOCA
+        </button>
+      </ng-template>
     </div>
+    <ng-template #login>
+      <div>
+        <button class="home-button" (click)="goToLogin()">
+          ACCEDI
+        </button>
+        <button class="home-button" (click)="register()">
+          REGISTRATI
+        </button>
+      </div>
+    </ng-template>
   </div>
-
-  <div class="Mainmenu">
-    <div class="MainMenuDiv">
-      <div class="TitleDiv" >
-        <div class="TextTitleDiv" >
-          <div class="title" >Demo Gioco di guida</div>
-        </div>
-      </div>
-      <div class="OptionsDiv">
-        <div class="TextOptDiv">
-          <button
-            gioca-button
-            class="bottone"
-            (click)=game()>Gioca</button>
-          <button
-            opzioni-button
-            class="bottone"
-            (click)=options()>Opzioni</button>
-        </div>
-      </div>
-    </div>
+  <div class="footer">
+    {{this.footer_credits}}
   </div>
-</main>
+</body>

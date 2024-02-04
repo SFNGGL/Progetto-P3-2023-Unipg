@@ -20,7 +20,7 @@ export class HomeComponent {
 
   getEMail() { return this.auth.userEmail }
 
-  login() { this.router.navigate(['login']) }
+  goToLogin() { this.router.navigate(['login']) }
 
   game() {
     // if (!this.isLogin()) {
@@ -34,6 +34,10 @@ export class HomeComponent {
     this.auth.logout()
     this.router.navigate([''])
   }
+
+  endscreen() { this.router.navigate(['endscreen']); }
+
+  register() { this.router.navigate(['register']); }
 
   options() { this.router.navigate(['options']) }
 
