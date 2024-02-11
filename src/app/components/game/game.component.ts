@@ -162,7 +162,7 @@ export class GameComponent implements OnInit {
       function checkCoin() {
         if(collideRectRect(car.x, car.y, car.xDim, car.yDim, coin.x, coin.y, 10, 10)) {
           car.coins++;
-          coin = new Coin(getRndInteger(0, 400), getRndInteger(0, 400));
+          coin = new Coin(getRndInteger(0, 380), getRndInteger(0, 380));
         }
       }
 
@@ -183,8 +183,8 @@ export class GameComponent implements OnInit {
 
       s.setup = () => {
         s.createCanvas(400, 400).parent('game');
-        coin = new Coin(getRndInteger(0, 400), getRndInteger(0, 400));
-        car = new Car("silver", 100, 300, 400, 400, 5);
+        coin = new Coin(getRndInteger(0, 380), getRndInteger(0, 380));
+        car = new Car("silver", getRndInteger(0, 380), getRndInteger(0, 380), 400, 400, 5);
       }
 
       s.draw = () => {
