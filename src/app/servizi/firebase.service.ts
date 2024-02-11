@@ -24,35 +24,26 @@ export class FirebaseService implements OnInit{
 
   constructor(
     private http: HttpClient,
-    public db: AngularFirestore
+    public db: AngularFirestore // Oggetto utilizzato per effettuare query al firestore
     ) {} //In questo modo possiamo utilizzare il modulo http tramite la variabile.
   
   ngOnInit(): void {
     
   }
-
-  private autolocate(uri: string) {
-    return `${FirebaseService.path}${uri}.json`
-  }
   
-  // Inserimento
-  insertScore(body: Score) {
-    // return this.http.post(url, body);
-    // FirebaseService.id_list.push(body['id'])
-    return this.http.post(this.autolocate("punteggio"), body)
-  }
-  
-  // Get
-  // per get specifici: url_DB/id_schema.json <---
+  /* Restituisce una promise che si risolve con un array di oggetti rappresentanti
+   * i punteggi dei vari giocatori registrati */
   retrieveScore(){
     return new Promise<any>((resolve) => {
       this.db.collection(
-        this.scoresCollection,
-        ref => ref.orderBy('highscore', 'desc')
+        this.scoresCollection, // Nome della collezione per la quale si deve effettuare la query
+        ref => ref.orderBy('highscore', 'desc') // Ordinamento decrescete in riferimento all'highscore
       )
-      .get()
+      .get() // Restituisce un oggetto observable, sul quale è possibile sottoscrivere un metodo che viene eseguito ad ogni aggiornamento dello stesso
       .subscribe(
-        score => resolve(
+        score => resolve( // Il metodo sottoscritto risolve la promise con il valore atteso
+          /* I dati interessati possono essere ottenuti mediante il metodo `data` dei singoli elementi
+           * restituiti in seguito alla query */
           score.docs.map((doc) => doc.data())
         )
       )
@@ -64,8 +55,8 @@ export class FirebaseService implements OnInit{
       await new Promise<any>((resolve) => {
         this.db.collection(
           this.scoresCollection,
-          ref => ref.where('email', '==', email)
-            .limit(1)
+          ref => ref.where('email', '==', email) // Filtraggio effettuato mediante il campo `email` del documento
+            .limit(1) // Ci si assicura che venga restituito un solo risultato
         )
         .get()
         .subscribe(
@@ -88,7 +79,7 @@ export class FirebaseService implements OnInit{
         .get()
         .subscribe(
           score => resolve(
-            score.docs.map((doc) => doc.id)
+            score.docs.map((doc) => doc.id) // Invece del metodo `data` si usa il campo `id`, che riporta l'id del documento
           )
         )
       })
@@ -96,19 +87,19 @@ export class FirebaseService implements OnInit{
   }
 
   async getDocByEmail(email: string) {
-    let id = await this.retrieveIdByEmail(email);
+    let id = await this.retrieveIdByEmail(email); // Si recupera l'id del documento mediante la mail
     return this.db.collection(
       this.scoresCollection,
       ref => ref.where('email', '==', email)
         .limit(1)
       )
-      .doc(id)
+      .doc(id) // Viene restituito il documento relativo alla mail inserita
   }
 
   // Rimozione singola
   async deleteScoreByEmail(email: string){
     try {
-      (await this.getDocByEmail(email)).delete()
+      (await this.getDocByEmail(email)).delete() // Viene restituito un riferimento al documento relativo alla mail e viene chiamato il metodo `delete`
     } catch {
       console.log(`Unable to delete score related to ${email}`)
     }
@@ -118,15 +109,15 @@ export class FirebaseService implements OnInit{
   async deleteAllScores() {
     let collection = await this.retrieveScore();
     collection.forEach( (element: any) => {
-      this.deleteScoreByEmail(element.email); // Un pò inefficiente, ma non ce ne preoccupiamo
+      this.deleteScoreByEmail(element.email); // Si eliminano tutti gli score memorizzati
     });
   }
 
   async updateHighscore(newScore: Score) {
-    try{
+    try{ // Si cerca di aggiornare il documento relativo alla mail del giocatore con il nuovo punteggio
       let doc = await this.getDocByEmail(newScore.email);
       await doc.update(newScore);
-    } catch { // Da verificare se esiste una specie di "upsert"
+    } catch { // Se il documento non esiste, questo viene aggiunto alla collezione
       await this.db.collection(this.scoresCollection).add(newScore);
     }
   }
