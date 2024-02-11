@@ -20,7 +20,7 @@ export class GameComponent implements OnInit {
   player_info : any = this.auth.userEmail;
   car : string = "Car";
   score: number = 0;
-  timer : number = 60;
+  timer : number = 30;
 
   private save() {
     localStorage.setItem('currentGame', JSON.stringify({
