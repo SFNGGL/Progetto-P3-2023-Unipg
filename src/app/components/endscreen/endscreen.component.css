@@ -11,6 +11,31 @@ body {
     overflow: auto;
 }
 
+#endscreen-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.endscreen-button {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  margin: 20px;
+  border-radius: 10px;
+  height: 150px;
+  width: 500px;
+  transition: ease 1s;
+}
+
+.endscreen-button:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  transition: ease 1s;
+}
+
 .loadingWheelContainer {
     text-align: center;
     margin: 60px;

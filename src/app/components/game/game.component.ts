@@ -190,6 +190,8 @@ export class GameComponent implements OnInit {
       s.draw = () => {
         if (this.timer <= 0) {
           s.clear();
+          clearInterval(timerInterval);
+          this.timer = 30;
           this.router.navigate(['endscreen']);
         }
 

@@ -15,6 +15,12 @@
 				Punteggio => {{this.info.highscore}}
 			</div>
 		</ng-template>
+		<div id="endscreen-button-container">
+			<div *ngIf="isAdmin">
+				<button (click)="deleteAllScores()" class="endscreen-button">Ripulisci la classifica</button>
+			</div>
+			<button (click)="goHome()" class="endscreen-button">Torna alla home</button>
+		</div>
 	</div>
 	<div *ngIf="scoresEmpty()" class="loadingWheelContainer">
 		<!-- Loading wheel: https://loading.io/css/ -->

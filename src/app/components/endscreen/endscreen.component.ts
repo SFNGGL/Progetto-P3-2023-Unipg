@@ -25,6 +25,10 @@ export class EndscreenComponent implements OnInit{
   ) {}
 
   scoresEmpty() { return !this.scores.length }
+  deleteAllScores() {
+    this.db.deleteAllScores();
+  }
+  goHome() { this.router.navigate(['']); }
 
   async ngOnInit(): Promise<void> {
     if (!this.auth.isLoggedIn) {
@@ -39,7 +43,9 @@ export class EndscreenComponent implements OnInit{
       await this.db.updateHighscore(this.info);
     }
 
-    this.scores = (await this.db.retrieveScore())
-      .filter((score: any) => score.email.length > 0); // Rimuoviamo dalla classifica il giocatore "anonimo"
+    setInterval(async () => {
+      this.scores = (await this.db.retrieveScore())
+        .filter((score: any) => score.email.length > 0); // Rimuoviamo dalla classifica il giocatore "anonimo"
+    }, 2000);
   }
 }
