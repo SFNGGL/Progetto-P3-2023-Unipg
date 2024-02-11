@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    background: radial-gradient(circle, rgb(255, 247, 0) 0%, rgb(162, 162, 3) 3%, rgb(255, 3, 3) 41%, rgb(255, 0, 247) 100%);
+    background-size: 400% 400%;
+    -webkit-animation: errorBg 30s ease infinite;
+    -moz-animation: errorBg 30s ease infinite;
+    animation: errorBg 30s ease infinite;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    overflow: auto;
+}
+
+.loadingWheelContainer {
+    text-align: center;
+    margin: 60px;
+}
+
+@-webkit-keyframes errorBg {
+    0% {
+        background-position: 93% 0%
+    }
+    50% {
+        background-position: 0% 100%
+    }
+    100% {
+        background-position: 93% 0%
+    }
+}
+
+@-moz-keyframes errorBg {
+    0% {
+        background-position: 93% 0%
+    }
+    50% {
+        background-position: 0% 100%
+    }
+    100% {
+        background-position: 93% 0%
+    }
+}
+
+@keyframes errorBg {
+    0% {
+        background-position: 93% 0%
+    }
+    50% {
+        background-position: 0% 100%
+    }
+    100% {
+        background-position: 93% 0%
+    }
+}
