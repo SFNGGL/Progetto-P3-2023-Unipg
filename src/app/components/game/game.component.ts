@@ -12,8 +12,6 @@ import { Injectable } from '@angular/core';
 })
 @Injectable({ providedIn: 'root' })
 export class GameComponent implements OnInit {
-  // public functions go here
-
   constructor(
     private auth: AuthService, private router: Router
   ) {
@@ -22,6 +20,7 @@ export class GameComponent implements OnInit {
   player_info : any = this.auth.userEmail;
   car : string = "Car";
   score: number = 0;
+  timer : number = 60;
 
   private save() {
     localStorage.setItem('currentGame', JSON.stringify({
@@ -38,68 +37,196 @@ export class GameComponent implements OnInit {
       return;
     }
 
-    let button_1 : any;
-    let button_2 : any;
-    let score_display : any;
-    let end : boolean = false;
+    let timerInterval: any = undefined;
 
     const sketch = (s: any) => {
+      let coin: Coin;
+      let car: Car;
+
+      class Coin {
+        x: number;
+        y: number;
+
+        constructor(x: number, y: number) {
+          this.x = x;
+          this.y = y;
+        }
+
+        display() {
+          s.fill("yellow");
+          s.rect(this.x, this.y, 10, 10);
+        }
+      }
+
+      class Car {
+        cColor: string;
+        x: number;
+        y: number;
+        maxX: number;
+        maxY: number;
+        step: number;
+        color: string;
+        coins: number;
+        xDim: number;
+        yDim: number;
+        horizontal: boolean;
+        move: boolean;
+        dX: number;
+        dY: number;
+        constructor(
+          cColor: string,
+          x: number,
+          y: number,
+          maxX: number,
+          maxY: number,
+          step: number) {
+          this.color = cColor;
+          this.x = x;
+          this.y = y;
+          this.maxX = maxX;
+          this.maxY = maxY;
+          this.step = step;
+          this.coins = 0;
+          this.xDim = 20;
+          this.yDim = 10;
+          this.horizontal = true;
+          this.move = false;
+          this.dX = 0;
+          this.dY = 0;
+        }
+
+        display() { // method!
+          s.fill(this.color);
+          if(this.horizontal) {
+            this.xDim = 20;
+            this.yDim = 10;
+          }
+          else {
+            this.xDim = 10;
+            this.yDim = 20;
+          }
+          s.rect(this.x, this.y, this.xDim, this.yDim);
+        }
+
+        up() {
+          this.dX = 0;
+          this.dY = -1 * this.step;
+          this.horizontal = false;
+        }
+
+        down() {
+          this.dX = 0;
+          this.dY = this.step;
+          this.horizontal = false;
+        }
+
+        left() {
+          this.dX = -1 * this.step;
+          this.dY = 0;
+          this.horizontal = true;
+        }
+
+        right() {
+          this.dX = this.step;
+          this.dY = 0;
+          this.horizontal = true;
+        }
+
+        update() {
+          if (this.move) {
+            this.x = (this.x + this.dX) % this.maxX;
+            if (this.x < 0) this.x += this.maxX;
+
+            this.y = (this.y + this.dY) % this.maxY;
+            if (this.y < 0) this.y += this.maxY;
+          }
+        }
+
+        start() {
+          this.move = true;
+        }
+
+        stop() {
+          this.move = false;
+        }
+      }
 
       s.preload = () => {
         // preload code
       }
 
+      function getRndInteger(min: number, max: number) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+      }
+
+      function checkCoin() {
+        if(collideRectRect(car.x, car.y, car.xDim, car.yDim, coin.x, coin.y, 10, 10)) {
+          car.coins++;
+          coin = new Coin(getRndInteger(0, 400), getRndInteger(0, 400));
+        }
+      }
+
+      function collideRectRect(
+        x: number,
+        y: number,
+        w: number,
+        h: number,
+        x2: number,
+        y2: number,
+        w2: number,
+        h2: number) {
+        return (x + w >= x2 &&
+            x <= x2 + w2 &&
+            y + h >= y2 &&
+            y <= y2 + h2);
+      };
+
       s.setup = () => {
-        s.createCanvas(400, 400);
-        button_1 = s.createButton('click me', 'white');
-        button_1.position(s.width, s.height - 150);
-        button_2 = s.createButton('submit', 'black');
-        button_2.position(s.width, s.height - 100);
-
-        button_1.mousePressed(() => {
-          if (this.score < 0) {this.score = 0;}
-          this.score++;
-          this.save();
-        })
-
-        button_2.mousePressed(() => {
-          alert('Hai totalizzato: ' + this.score);
-          // this.router.navigate(['endscreen']);
-          end = true;
-        })
-
-        score_display = s.createP("Your score is " + this.score);
-        score_display.style("background-color", "white");
-
-        button_1.parent("buttons");
-        button_2.parent("buttons");
-        score_display.parent("score");
-
+        s.createCanvas(400, 400).parent('game');
+        coin = new Coin(getRndInteger(0, 400), getRndInteger(0, 400));
+        car = new Car("silver", 100, 300, 400, 400, 5);
       }
 
       s.draw = () => {
-        // gioco
-        // a fine mandare dentro endscreen
-        // this.router.navigate(['endscreen'])
-
-        if (end) {
+        if (this.timer <= 0) {
           s.clear();
           this.router.navigate(['endscreen']);
         }
 
-        s.background(51);
+        s.background("green");
+        car.update();
+        coin.display();
+        car.display();
+        checkCoin();
+        this.score = car.coins;
+        this.save();
+      }
 
-        s.push();
-        
-        score_display.html("Your score is" + this.score)
+      s.keyPressed = () => {
+        if (timerInterval == undefined) {
+          /* Timer non accuratissimo, per ottenere un risultato migliore usare dei delta. setInterval
+           * ripete l'esecuzione della funzione presa come primo argomento ad ogni tick scandito dalla
+           * tempistica in millisecondi specificata come secondo argomento */
+          timerInterval = setInterval(() => {
+            if(this.timer > 0) this.timer--;
+          }, 1000);
+        }
+        if (s.keyIsDown(s.LEFT_ARROW)) {
+          car.left();
+        } else if (s.keyIsDown(s.RIGHT_ARROW)) {
+          car.right();
+        } else if (s.keyIsDown(s.UP_ARROW)) {
+          car.up();
+        } else if (s.keyIsDown(s.DOWN_ARROW)) {
+          car.down();
+        }
+        car.start();
+      }
 
-        s.pop();
-
+      s.keyReleased = () => {
+        car.stop();
       }
     }
-    let canvas = new p5(sketch)
+    let canvas = new p5(sketch);
   }
-
-  // this.car_c.car
-
 }
